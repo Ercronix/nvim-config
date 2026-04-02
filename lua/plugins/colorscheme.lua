@@ -43,7 +43,7 @@ return {
   {
       "ellisonleao/gruvbox.nvim",
       -- priority = 1000 ,
-      lazy = ture,
+      lazy = true,
       config = function()
           require("gruvbox").setup({
               terminal_colors = true, -- add neovim terminal colors
@@ -136,7 +136,7 @@ return {
               },
           })
 
-          vim.cmd("colorscheme kanagawa")
+          vim.cmd("colorscheme tokyonight")
       end
   },
   -- NOTE: neosolarized 

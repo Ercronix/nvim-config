@@ -3,40 +3,28 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     main = "ibl",
     config = function()
-        local highlight = {
-            "RainbowRed",
-            "RainbowYellow",
-            "RainbowBlue",
-            "RainbowOrange",
-            "RainbowGreen",
-            "RainbowViolet",
-            "RainbowCyan",
-        }
-
         local hooks = require("ibl.hooks")
 
-        -- Create highlight groups using your tokyonight colors
+        -- Create highlight groups
         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-            vim.api.nvim_set_hl(0, "RainbowRed",    { fg = "#E06C75" })
-            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-            vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = "#61AFEF" })
-            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-            vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = "#98C379" })
-            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-            vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = "#56B6C2" })
+            -- Subtle indent line color
+            vim.api.nvim_set_hl(0, "IndentLine", { fg = "#3b4261" }) -- soft gray (Tokyonight style)
+
+            -- Active scope color (function you're inside)
+            vim.api.nvim_set_hl(0, "ScopeLine", { fg = "#7aa2f7", bold = true })
         end)
 
         require("ibl").setup({
             indent = {
                 char = "│",
                 tab_char = "│",
-                highlight = highlight,
+                highlight = "IndentLine", -- single neutral color
             },
             scope = {
                 enabled = true,
-                show_start = true,
+                show_start = false,
                 show_end = false,
-                highlight = highlight,
+                highlight = "ScopeLine", -- ONLY active scope is colored
             },
             exclude = {
                 filetypes = {
@@ -50,7 +38,6 @@ return {
                     "TelescopePrompt",
                     "NvimTree",
                     "alpha",
-                    "",
                 },
             },
         })
