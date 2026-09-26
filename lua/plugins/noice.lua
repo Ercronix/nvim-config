@@ -62,7 +62,7 @@ return {
             ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
           },
           signature = {
-            auto_open = { enabled = true },             -- disable auto signature help on insert mode
+            enabled = false, -- lsp_signature.nvim handles signature help
           },
         },
         routes = {
@@ -91,9 +91,6 @@ return {
           ---@type 'nui'|'cmp'
           backend = "nui", -- backend to use to show regular cmdline completions
           kind_icons = {}, -- set to `false` to disable icons
-        },
-        signature = {
-          enabled = true,
         },
       })
     end

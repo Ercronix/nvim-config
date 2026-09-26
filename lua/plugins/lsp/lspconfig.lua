@@ -14,19 +14,19 @@ return {
 
                 -- Keymaps
                 opts.desc = "Show LSP references"
-                vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+                vim.keymap.set("n", "gR", function() Snacks.picker.lsp_references() end, opts)
 
                 opts.desc = "Go to declaration"
                 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
                 opts.desc = "Show LSP definitions"
-                vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+                vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end, opts)
 
                 opts.desc = "Show LSP implementations"
-                vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+                vim.keymap.set("n", "gi", function() Snacks.picker.lsp_implementations() end, opts)
 
                 opts.desc = "Show LSP type definitions"
-                vim.keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+                vim.keymap.set("n", "gt", function() Snacks.picker.lsp_type_definitions() end, opts)
 
                 opts.desc = "See available code actions"
                 vim.keymap.set({ "n", "v" }, "<leader>vca", function()
@@ -37,20 +37,16 @@ return {
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
                 opts.desc = "Show buffer diagnostics"
-                vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+                vim.keymap.set("n", "<leader>D", function() Snacks.picker.diagnostics_buffer() end, opts)
 
                 opts.desc = "Show line diagnostics"
-                vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+                vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts)
 
                 opts.desc = "Show documentation for what is under cursor"
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
                 opts.desc = "Restart LSP"
                 vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
-
-                vim.keymap.set("i", "<C-h>", function()
-                    vim.lsp.buf.signature_help()
-                end, opts)
             end,
         })
 
@@ -129,20 +125,6 @@ return {
             },
         })
 
-        -- emmet_ls
-        vim.lsp.config("emmet_ls", {
-            filetypes = {
-                "html",
-                "typescriptreact",
-                "javascriptreact",
-                "css",
-                "sass",
-                "scss",
-                "less",
-                "svelte",
-            },
-        })
-
         -- ts_ls (TypeScript/JavaScript)
         vim.lsp.config("ts_ls", {
             filetypes = {
@@ -192,13 +174,21 @@ return {
                 },
             },
         })
+        -- only attach in real Angular workspaces (otherwise it starts on every TS file)
+        vim.lsp.config("angularls", {
+            workspace_required = true,
+        })
 
+        vim.lsp.config("clangd", {
+          cmd = { "clangd" },
+          filetypes = { "c", "cpp" },
+        })
         vim.lsp.enable("lua_ls")
         vim.lsp.enable("emmet_language_server")
-        vim.lsp.enable("emmet_ls")
         vim.lsp.enable("ts_ls")
         vim.lsp.enable("gopls")
         vim.lsp.enable("astro")
         vim.lsp.enable("tailwindcss")
+        vim.lsp.enable("clangd")
     end,
 }

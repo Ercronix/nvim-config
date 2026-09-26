@@ -1,17 +1,18 @@
-vim.fn.sign_define("NvimTreeDiagnosticErrorIcon",   { text = " ", texthl = "DiagnosticError" })
-vim.fn.sign_define("NvimTreeDiagnosticWarnIcon",    { text = " ", texthl = "DiagnosticWarn" })
-vim.fn.sign_define("NvimTreeDiagnosticHintIcon",    { text = "󰠠 ", texthl = "DiagnosticHint" })
-vim.fn.sign_define("NvimTreeDiagnosticInfoIcon",    { text = " ", texthl = "DiagnosticInfo" })
 return {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
 
+        vim.fn.sign_define("NvimTreeDiagnosticErrorIcon",   { text = " ", texthl = "DiagnosticError" })
+        vim.fn.sign_define("NvimTreeDiagnosticWarnIcon",    { text = " ", texthl = "DiagnosticWarn" })
+        vim.fn.sign_define("NvimTreeDiagnosticHintIcon",    { text = "󰠠 ", texthl = "DiagnosticHint" })
+        vim.fn.sign_define("NvimTreeDiagnosticInfoIcon",    { text = " ", texthl = "DiagnosticInfo" })
         -- disable netrw (required by nvim-tree)
         vim.g.loaded_netrw = 1
         vim.g.loaded_netrwPlugin = 1
 
         require("nvim-tree").setup({
+            hijack_directories = { enable = false }, -- oil handles directories
             view = {
                 width = 35,
                 side = "left",

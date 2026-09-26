@@ -3,7 +3,7 @@ return {
   {
       "rose-pine/neovim",
       name = "rose-pine",
-      -- priority = 1000,
+      lazy = true,
       config = function()
           require("rose-pine").setup({
               variant = "main",      -- auto, main, moon, or dawn
@@ -77,7 +77,8 @@ return {
   -- NOTE: Kanagwa
   {
       "rebelot/kanagawa.nvim",
-      lazy = ture,
+      lazy = false,
+      priority = 1000, -- load before other plugins so they pick up its highlights
       config = function()
           require('kanagawa').setup({
               compile = false,  -- enable compiling the colorscheme
@@ -136,7 +137,7 @@ return {
               },
           })
 
-          vim.cmd("colorscheme tokyonight")
+          vim.cmd("colorscheme kanagawa")
       end
   },
   -- NOTE: neosolarized 
@@ -200,7 +201,7 @@ return {
   {
       "folke/tokyonight.nvim",
       name = "folkeTokyonight",
-      -- priority = 1000,
+      lazy = true,
       config = function()
           local transparent = true
           local bg = "#011628"
@@ -242,33 +243,6 @@ return {
               end,
           })
           --vim.cmd("colorscheme tokyonight")
-
-          --vim.cmd("colorscheme lushwal")
-          -- NOTE: Auto switch to tokyonight for markdown files only
-          -- vim.api.nvim_create_autocmd("FileType", {
-          --     pattern = { "markdown" },
-          --     callback = function()
-          --         -- Ensure the theme switch only happens once for a buffer
-          --         local buffer = vim.api.nvim_get_current_buf()
-          --         if not vim.b[buffer].tokyonight_applied then
-          --             if vim.fn.expand("%:t") ~= "" and vim.api.nvim_buf_get_option(0, "buftype") ~= "nofile" then
-          --                 vim.cmd("colorscheme tokyonight")
-          --             end
-          --             vim.b[buffer].tokyonight_applied = true
-          --         end
-          --     end,
-          -- })
       end,
   },
-  --Lushwal is a wallpaper for pywal vim.g.(lushwal_configuration {} for config)
-  --{
-  --  "oncomouse/lushwal.nvim",
-  --  lazy = true,
-  --  cmd = { "LushwalCompile" },
-  --  dependencies = {
-  --    { "rktjmp/lush.nvim" },
-  --    { "rktjmp/shipwright.nvim" },
-  --  },
-  --  lazy = false,
-  --},
 }

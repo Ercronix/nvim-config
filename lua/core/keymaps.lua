@@ -1,7 +1,7 @@
 local opts = {noremap = true, silent = true}
 
 vim.g.mapleader = " "
-vim.g.localmapleader = " "
+vim.g.maplocalleader = " "
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {desc = "moves lines down in v mode"})
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {desc = "moves lines up in v mode"})
@@ -12,15 +12,17 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 
-vim.keymap.set("x", "<leader>p", [["_dP"]])
+vim.keymap.set("x", "<leader>p", [["_dP"]], { desc = "Paste without yanking" })
 
-vim.keymap.set("v", "p", '"_dp', opts)
+vim.keymap.set("v", "p", '"_dP', opts)
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("n", "C-c", ":nohl<CR>", {desc = "Clear search hl", silent =true})
+vim.keymap.set("n", "<C-c>", ":nohl<CR>", {desc = "Clear search hl", silent = true})
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set({ "n", "v" }, "<leader>f", function()
+    require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
+end, { desc = "Format file or range (conform)" })
 vim.keymap.set("n", "x", '"_x', opts)
 --Tabs
 vim.keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>', { silent = true })
@@ -40,7 +42,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 -- Copy filepath to the clipboard
-vim.keymap.set("n", "<leader>fp", function()
+vim.keymap.set("n", "<leader>cp", function()
   local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
   vim.fn.setreg("+", filePath) -- Copy the file path to the clipboard register
   print("File path copied to clipboard: " .. filePath) -- Optional: print message to confirm

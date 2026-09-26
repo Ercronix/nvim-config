@@ -32,7 +32,10 @@ return {
         })
 
         mason_lspconfig.setup({
-            automatic_enable = false,
+            -- emmet_ls duplicates emmet_language_server; biome duplicates nvim-lint's biomejs
+            automatic_enable = {
+                exclude = { "emmet_ls", "biome" },
+            },
             -- servers for mason to install
             ensure_installed = {
                 "lua_ls",
@@ -43,10 +46,10 @@ return {
                 "gopls",
                 "angularls",
                 "astro",
-                "emmet_ls",
                 "emmet_language_server",
                 -- "eslint",
                 "marksman",
+                "clangd"
             },
         })
 
@@ -58,6 +61,8 @@ return {
                 "pylint",
                 "clangd",
                 "denols",
+                "biome",    -- JS/TS/Svelte linter + formatter
+                "tree-sitter-cli",
                 -- { 'eslint_d', version = '13.1.2' },
             },
 

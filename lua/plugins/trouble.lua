@@ -88,13 +88,23 @@ return {
         vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist toggle<CR>",
             { desc = "Location list (Trouble)" })
 
-        -- Navigate between trouble items without keeping the panel focused
+        -- Navigate trouble items when a trouble list is open, otherwise jump diagnostics
         vim.keymap.set("n", "[d", function()
-            require("trouble").prev({ skip_groups = true, jump = true })
-        end, { desc = "Prev trouble item" })
+            local trouble = require("trouble")
+            if trouble.is_open() then
+                trouble.prev({ skip_groups = true, jump = true })
+            else
+                vim.diagnostic.jump({ count = -1, float = true })
+            end
+        end, { desc = "Prev trouble item / diagnostic" })
 
         vim.keymap.set("n", "]d", function()
-            require("trouble").next({ skip_groups = true, jump = true })
-        end, { desc = "Next trouble item" })
+            local trouble = require("trouble")
+            if trouble.is_open() then
+                trouble.next({ skip_groups = true, jump = true })
+            else
+                vim.diagnostic.jump({ count = 1, float = true })
+            end
+        end, { desc = "Next trouble item / diagnostic" })
     end,
 }

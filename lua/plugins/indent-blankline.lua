@@ -5,26 +5,23 @@ return {
     config = function()
         local hooks = require("ibl.hooks")
 
-        -- Create highlight groups
+        -- Single indent color
         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-            -- Subtle indent line color
-            vim.api.nvim_set_hl(0, "IndentLine", { fg = "#3b4261" }) -- soft gray (Tokyonight style)
-
-            -- Active scope color (function you're inside)
-            vim.api.nvim_set_hl(0, "ScopeLine", { fg = "#7aa2f7", bold = true })
+            vim.api.nvim_set_hl(0, "IndentLine", { fg = "#3b4261" }) -- subtle gray
+            vim.api.nvim_set_hl(0, "CurrentScope", { fg = "#7aa2f7" }) -- highlight for current function/block
         end)
 
         require("ibl").setup({
             indent = {
                 char = "│",
                 tab_char = "│",
-                highlight = "IndentLine", -- single neutral color
+                highlight = { "IndentLine" },
             },
             scope = {
                 enabled = true,
-                show_start = false,
+                show_start = false, -- cleaner look
                 show_end = false,
-                highlight = "ScopeLine", -- ONLY active scope is colored
+                highlight = { "CurrentScope" }, -- only current scope highlighted
             },
             exclude = {
                 filetypes = {
@@ -38,6 +35,7 @@ return {
                     "TelescopePrompt",
                     "NvimTree",
                     "alpha",
+                    "",
                 },
             },
         })

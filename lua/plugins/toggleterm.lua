@@ -55,18 +55,6 @@ return {
         -- Named terminal instances
         local Terminal = require("toggleterm.terminal").Terminal
 
-        -- Lazygit terminal (separate from snacks lazygit, useful as fallback)
-        local lazygit = Terminal:new({
-            cmd = "lazygit",
-            dir = "git_dir",
-            direction = "float",
-            float_opts = { border = "curved" },
-            on_open = function(term)
-                vim.cmd("startinsert!")
-                vim.keymap.set("n", "q", "<cmd>close<CR>", { noremap = true, silent = true, buffer = term.bufnr })
-            end,
-        })
-
         -- Node REPL
         local node = Terminal:new({
             cmd = "node",
@@ -93,7 +81,6 @@ return {
         vim.keymap.set("n", "<leader>tv",  "<cmd>ToggleTerm direction=vertical<CR>",   { desc = "Vertical terminal" })
         --vim.keymap.set("n", "<leader>tf",  "<cmd>ToggleTerm direction=tab<CR>",        { desc = "Tab terminal" })
 
-        vim.keymap.set("n", "<leader>tg", function() lazygit:toggle() end,     { desc = "Lazygit (toggleterm)" })
         vim.keymap.set("n", "<leader>tn", function() node:toggle() end,        { desc = "Node REPL" })
         vim.keymap.set("n", "<leader>tp", function() python:toggle() end,      { desc = "Python REPL" })
 
